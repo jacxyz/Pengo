@@ -1,0 +1,20 @@
+CURRENT/NEXT TASK:
+Block push
+
+
+BACKLOG:
+Maze
+Collision
+- Player vs NPC
+Block push
+Destroy block
+
+Wall freeze
+
+
+DONE:
+Add border to maze (extra row of sprites?)
+NPC collision and moving in maze
+Create Maze
+Turn players animation according to direction 
+Multiple NPC and one Player moving and animating at the same time
