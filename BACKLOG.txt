@@ -2,13 +2,15 @@ CURRENT/NEXT TASK:
 Block push
 
 
+BUGS:
+Possibly issue with NPC-spawn
+
 BACKLOG:
 Maze
 Collision
 - Player vs NPC
 Block push
 Destroy block
-
 Wall freeze
 
 

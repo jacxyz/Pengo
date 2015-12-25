@@ -34,8 +34,8 @@ function Player:new(animatedSprite)
 end
 
 function Player:getX() return self.x end
-
 function Player:getY() return self.y end
+function Player:getDirection() return self.current_direction end
 
 
 function Player:update(dt)
