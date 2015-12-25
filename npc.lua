@@ -32,7 +32,7 @@ function Npc:new(animatedSprite)
 		["Move"] = 2,	-- npc
 		["Crushed"] = 5 -- npc
 	}
-	object.current_mode = "Spawn"
+	object.current_mode = "Move"
 	
 	return object
 end
