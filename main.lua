@@ -21,13 +21,13 @@ function love.load()
 	player_animation:load()
 	player = Player:new(player_animation)
 	
-	npc_animation = AnimatedSprite:new("Pengo_sheet.png", 16, 16, 8, 4, 0, 8)
+	npc_animation = AnimatedSprite:new("Pengo_sheet.png", 16, 16, 8, 5, 0, 8)
 	npc_animation:load()
 	npc[#npc + 1] = Npc:new(npc_animation)
-	npc_animation = AnimatedSprite:new("Pengo_sheet.png", 16, 16, 8, 4, 0, 8)
+	npc_animation = AnimatedSprite:new("Pengo_sheet.png", 16, 16, 8, 5, 0, 8)
 	npc_animation:load()
 	npc[#npc + 1] = Npc:new(npc_animation)
-	npc_animation = AnimatedSprite:new("Pengo_sheet.png", 16, 16, 8, 4, 0, 8)
+	npc_animation = AnimatedSprite:new("Pengo_sheet.png", 16, 16, 8, 5, 0, 8)
 	npc_animation:load()
 	npc[#npc + 1] = Npc:new(npc_animation)
 	npc[2]:set_mode("Break")
@@ -49,10 +49,14 @@ function love.update(dt)
 		player:stop(dt)
 	end
 	
+	-- NPC Collision
 	for i = 1, #npc do
+		-- collision against maze
 		if npc[i]:get_mode() ~= "Spawn" and level:isColliding(npc[i]:getX(), npc[i]:getY(), 16, 16) then
 			npc[i]:collided(dt)
 		end
+		-- collision against moving block
+		level:is_crushed(npc[i])
 	end
 	
 	-- Input

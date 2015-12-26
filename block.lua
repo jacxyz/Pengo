@@ -9,7 +9,7 @@ function Block:new(x, y, ID)
 	object.y = y
 	object.width = 16
 	object.height = 16
-	object.speed = 2
+	object.speed = 2.0
 	object.directionX = 0
 	object.directionY = 0
 	object.ID = ID
@@ -21,6 +21,8 @@ function Block:getX() return self.x end
 function Block:getY() return self.y end
 function Block:get_ID() return self.ID end
 function Block:get_mode() return self.mode end
+function Block:get_speed() return self.speed end
+function Block:get_direction() return self.directionX, self.directionY end
 
 function Block:set_mode(mode) self.mode = mode end
 function Block:set_ID(ID) self.ID = ID end

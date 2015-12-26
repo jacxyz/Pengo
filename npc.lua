@@ -38,21 +38,15 @@ function Npc:new(animatedSprite)
 end
 
 function Npc:getX() return self.x end
-
 function Npc:getY() return self.y end
+function Npc:get_mode() return self.current_mode end
+function Npc:set_mode(m) self.current_mode = m end
 
 function Npc:update(dt)
 
---	if self.Mode[self.current_mode] == self.Mode["Stop"] then
---		self:random_direction()
---	end
---	self:move()
-	
-	self.x = self.x + (self.directionX * self.speed)
-	self.y = self.y + (self.directionY * self.speed)
-	self.animation:update(dt)
-
-	if self.Mode[self.current_mode] == self.Mode["Spawn"] then
+	if self.Mode[self.current_mode] == self.Mode["Crushed"] then
+		print("CRUSHED")
+	elseif self.Mode[self.current_mode] == self.Mode["Spawn"] then
 		self.animation:set_animation_frames(6)
 		cntr = cntr + 1
 		if cntr > 18 then
@@ -61,21 +55,15 @@ function Npc:update(dt)
 			self.animation:set_animation_frames(2)
 			self.animation:set_sheet_position(self.Directions[self.current_direction], self.Mode[self.current_mode])
 
-		end		
+		end
 	elseif (self.x % 16 == 0) and (self.y % 16 == 0) then
 		self:random_direction()
---		self:move()
 	end
-end
+	self.x = self.x + (self.directionX * self.speed)
+	self.y = self.y + (self.directionY * self.speed)
+	self.animation:update(dt)
 
---[[function Npc:move()
-	if self.current_direction == "Up" then self.directionX = 0 self.directionY = -1
-	elseif self.current_direction == "Down" then self.directionX = 0 self.directionY = 1
-	elseif self.current_direction == "Left" then self.directionX = -1 self.directionY = 0
-	elseif self.current_direction == "Right" then self.directionX = 1 self.directionY = 0
-	end
 end
---]]
 
 function Npc:random_direction()
 	local rnd = love.math.random(1,4)
@@ -110,8 +98,11 @@ function Npc:set_mode(mode)
 	self.animation:set_sheet_position(self.Directions[self.current_direction], self.Mode[self.current_mode])
 end
 
-function Npc:get_mode()
-	return self.current_mode
+function Npc:got_crushed(s, dirX, dirY)
+	self.current_mode = "Crushed"
+	self.directionX = dirX
+	self.directionY = dirY
+	self.speed = s
 end
 
 function Npc:collided(dt)

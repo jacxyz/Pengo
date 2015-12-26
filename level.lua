@@ -108,15 +108,6 @@ function Level:push_block(gridX, gridY, direction)
 	end
 end
 
---[[function Level:draw()
-	for y = 1, #maze do
-		for x = 1, #maze[y] do
-			love.graphics.draw(self.sprite_sheet, self.sprites[maze[y][x]+1], x*self.width, y*self.height, 0, 1, 1)
-		end
-	end
-end
---]]
-
 function Level:update(dt)
 	-- update blocks
 	for y = 1, #self.blocks do
@@ -141,7 +132,19 @@ function Level:update(dt)
 			end
 		end
 	end
-	--]]
+end
+
+function Level:is_crushed(game_object)
+	-- check moving block collision against NPC
+	for y = 1, #self.blocks do
+		for x = 1, #self.blocks[y] do
+			if self.blocks[y][x]:get_mode() == "moving" then
+				if self:CheckCollision(game_object:getX(), game_object:getY(), 16, 16, self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 16, 16) then
+					game_object:got_crushed(self.blocks[y][x]:get_speed(), self.blocks[y][x]:get_direction())
+				end
+			end
+		end
+	end
 end
 
 function Level:draw()
