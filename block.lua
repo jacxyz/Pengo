@@ -23,9 +23,9 @@ function Block:get_ID() return self.ID end
 function Block:get_mode() return self.mode end
 
 function Block:set_mode(mode) self.mode = mode end
+function Block:set_ID(ID) self.ID = ID end
 
 function Block:update(dt)
-if self.directionY ~= 0 then print ("moving", self.x, self.y) end
 	self.x = self.x + (self.directionX * self.speed)
 	self.y = self.y + (self.directionY * self.speed)
 end
@@ -44,5 +44,7 @@ function Block:collided(dt)
 end
 
 function Block:draw(sprite_sheet, sprites)
-	love.graphics.draw(sprite_sheet, sprites[self.ID+1], self.x, self.y, 0, 1, 1)
+	if self.ID ~= 0 then
+		love.graphics.draw(sprite_sheet, sprites[self.ID+1], self.x, self.y, 0, 1, 1)
+	end
 end

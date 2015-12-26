@@ -132,8 +132,11 @@ function Level:update(dt)
 				if self:isColliding(self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 16, 16) then
 					self.blocks[y][x]:collided(dt)
 					maze[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())] = self.blocks[y][x]:get_ID()			--get the new X and Y position from where block collided
-					self.blocks[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())] = self.blocks[y][x]
-					self.blocks[y][x] = Block:new(self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 0) 
+					self.blocks[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())]:set_ID(self.blocks[y][x]:get_ID())
+					self.blocks[y][x]:set_ID(0)
+--					self.blocks[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())] = self.blocks[y][x]
+--					self.blocks[y][x] = Block:new(self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 0) 
+					self:loadBlocks()
 				end
 			end
 		end
@@ -150,12 +153,19 @@ function Level:draw()
 end
 
 function Level:dump_maze()
-print()
+print("Maze")
 	for y = 1, #maze do
 		for x = 1, #maze[y] do
 			io.write(maze[y][x])
 		end
 		io.write("\n")
+	end
+print("Blocks")
+	for y = 1, #self.blocks do
+		for x = 1, #self.blocks[y] do
+			io.write(self.blocks[y][x]:get_ID())
+		end
+		io.write"\n"
 	end
 end
 
