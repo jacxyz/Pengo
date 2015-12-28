@@ -108,15 +108,6 @@ function Level:push_block(gridX, gridY, direction)
 	end
 end
 
---[[function Level:draw()
-	for y = 1, #maze do
-		for x = 1, #maze[y] do
-			love.graphics.draw(self.sprite_sheet, self.sprites[maze[y][x]+1], x*self.width, y*self.height, 0, 1, 1)
-		end
-	end
-end
---]]
-
 function Level:update(dt)
 	-- update blocks
 	for y = 1, #self.blocks do
@@ -132,13 +123,28 @@ function Level:update(dt)
 				if self:isColliding(self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 16, 16) then
 					self.blocks[y][x]:collided(dt)
 					maze[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())] = self.blocks[y][x]:get_ID()			--get the new X and Y position from where block collided
-					self.blocks[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())] = self.blocks[y][x]
-					self.blocks[y][x] = Block:new(self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 0) 
+					self.blocks[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())]:set_ID(self.blocks[y][x]:get_ID())
+					self.blocks[y][x]:set_ID(0)
+--					self.blocks[self:gridPos(self.blocks[y][x]:getY())][self:gridPos(self.blocks[y][x]:getX())] = self.blocks[y][x]
+--					self.blocks[y][x] = Block:new(self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 0) 
+					self:loadBlocks()
 				end
 			end
 		end
 	end
-	--]]
+end
+
+function Level:is_crushed(game_object)
+	-- check moving block collision against NPC
+	for y = 1, #self.blocks do
+		for x = 1, #self.blocks[y] do
+			if self.blocks[y][x]:get_mode() == "moving" then
+				if self:CheckCollision(game_object:getX(), game_object:getY(), 16, 16, self.blocks[y][x]:getX(), self.blocks[y][x]:getY(), 16, 16) then
+					game_object:got_crushed(self.blocks[y][x]:get_speed(), self.blocks[y][x]:get_direction())
+				end
+			end
+		end
+	end
 end
 
 function Level:draw()
@@ -150,12 +156,19 @@ function Level:draw()
 end
 
 function Level:dump_maze()
-print()
+print("Maze")
 	for y = 1, #maze do
 		for x = 1, #maze[y] do
 			io.write(maze[y][x])
 		end
 		io.write("\n")
+	end
+print("Blocks")
+	for y = 1, #self.blocks do
+		for x = 1, #self.blocks[y] do
+			io.write(self.blocks[y][x]:get_ID())
+		end
+		io.write"\n"
 	end
 end
 

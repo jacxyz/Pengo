@@ -88,7 +88,7 @@ function AnimatedSprite:set_animation_frames(nrOfFrames)
 	self.animation_frames = nrOfFrames
 end
 
-function AnimatedSprite:(x, y)
+function AnimatedSprite:draw(x, y)
 	love.graphics.draw(self.sprite_sheet, self.sprites[self.current_row][(self.current_animation + self.current_frame) - 1], x, y, 0, 1, 1)	
 end
 

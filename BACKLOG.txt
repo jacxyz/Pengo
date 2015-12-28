@@ -1,20 +1,20 @@
 CURRENT/NEXT TASK:
-Block push
-
+NPC removed after crush
 
 BUGS:
 Possibly issue with NPC-spawn
+Error when animating NPC "crushed"-animation - row 5
 
 BACKLOG:
-Maze
 Collision
 - Player vs NPC
-Block push
 Destroy block
 Wall freeze
-
+Delay NPC direction change
 
 DONE:
+Block hit NPC
+Block push
 Add border to maze (extra row of sprites?)
 NPC collision and moving in maze
 Create Maze
